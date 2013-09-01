@@ -60,7 +60,7 @@ class DjangoMpttAdmin(admin.ModelAdmin):
                     wrap(view),
                     name='%s_%s_%s' % (
                         self.model._meta.app_label,
-                        self.model._meta.module_name,
+                        self.model._meta.model_name,
                         url_name
                     )
                 )
@@ -72,7 +72,7 @@ class DjangoMpttAdmin(admin.ModelAdmin):
         return urlpatterns
 
     @csrf_protect_m
-    @transaction.commit_on_success
+    @transaction.atomic
     def move_view(self, request, object_id):
         instance = self.get_object(request, unquote(object_id))
 
@@ -125,7 +125,7 @@ class DjangoMpttAdmin(admin.ModelAdmin):
 
     def get_admin_url(self, name, args=None):
         opts = self.model._meta
-        url_name = 'admin:%s_%s_%s' % (opts.app_label, opts.module_name, name)
+        url_name = 'admin:%s_%s_%s' % (opts.app_label, opts.model_name, name)
 
         return reverse(
             url_name,
