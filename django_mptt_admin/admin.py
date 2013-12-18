@@ -37,6 +37,7 @@ class DjangoMpttAdmin(admin.ModelAdmin):
             tree_json_url=self.get_admin_url('tree_json'),
             grid_url=self.get_admin_url('grid'),
         )
+        import ipdb; ipdb.set_trace()  # XXX BREAKPOINT
         context.update(extra_context)
 
         return TemplateResponse(
